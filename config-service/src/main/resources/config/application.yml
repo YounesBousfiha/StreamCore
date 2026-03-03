@@ -1,0 +1,2 @@
+# Default config for all services (optional)
+# Service-specific configs: video-service.yml, user-service.yml, gateway-service.yml
