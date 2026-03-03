@@ -1,0 +1,110 @@
+services:
+  postgres-video:
+    image: postgres:16-alpine
+    container_name: streamcore-postgres-video
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: video_db
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  postgres-user:
+    image: postgres:16-alpine
+    container_name: streamcore-postgres-user
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: user_db
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  discovery-service:
+    build:
+      context: ./discovery-service
+      dockerfile: Dockerfile
+    container_name: streamcore-discovery
+    ports:
+      - "8761:8761"
+    environment:
+      EUREKA_INSTANCE_HOSTNAME: discovery-service
+
+  config-service:
+    build:
+      context: ./config-service
+      dockerfile: Dockerfile
+    container_name: streamcore-config
+    ports:
+      - "8888:8888"
+    depends_on:
+      - discovery-service
+
+  video-service:
+    build:
+      context: ./video-service
+      dockerfile: Dockerfile
+    container_name: streamcore-video-service
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-video:5432/video_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      EUREKA_SERVER: http://discovery-service:8761/eureka
+      SERVER_PORT: 8081
+    depends_on:
+      postgres-video:
+        condition: service_healthy
+      discovery-service:
+        condition: service_started
+      config-service:
+        condition: service_started
+
+  user-service:
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    container_name: streamcore-user-service
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-user:5432/user_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      EUREKA_SERVER: http://discovery-service:8761/eureka
+      SERVER_PORT: 8082
+    depends_on:
+      postgres-user:
+        condition: service_healthy
+      discovery-service:
+        condition: service_started
+      config-service:
+        condition: service_started
+
+  gateway-service:
+    build:
+      context: ./gateway-service
+      dockerfile: Dockerfile
+    container_name: streamcore-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      EUREKA_SERVER: http://discovery-service:8761/eureka
+      SERVER_PORT: 8080
+    depends_on:
+      discovery-service:
+        condition: service_started
+      config-service:
+        condition: service_started
