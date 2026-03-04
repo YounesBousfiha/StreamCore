@@ -1,13 +1,11 @@
 spring:
   application:
     name: config-service
-  profiles:
-    active: native
   cloud:
     config:
       server:
-        native:
-          search-locations: classpath:/config
+        git:
+          uri: https://github.com/YounesBousfiha/StreamCore-config-service
 
 server:
   port: 8888
