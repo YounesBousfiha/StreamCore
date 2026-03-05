@@ -1,0 +1,442 @@
+{
+	"info": {
+		"_postman_id": "streamcore-api-collection",
+		"name": "StreamCore API Collection",
+		"description": "Collection complète des endpoints API de StreamCore - Plateforme de streaming vidéo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Video Service",
+			"item": [
+				{
+					"name": "Get All Videos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/videos",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "videos"]
+						},
+						"description": "Récupère la liste complète de toutes les vidéos"
+					}
+				},
+				{
+					"name": "Get Video By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/videos/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "videos", "1"]
+						},
+						"description": "Récupère une vidéo spécifique par son ID"
+					}
+				},
+				{
+					"name": "Create Video",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Inception\",\n  \"description\": \"Un voleur qui s'infiltre dans les rêves des gens pour voler leurs secrets\",\n  \"thumbnailUrl\": \"https://example.com/inception-thumb.jpg\",\n  \"trailerUrl\": \"https://www.youtube.com/embed/YoHD9XEInc0\",\n  \"duration\": 148,\n  \"releaseYear\": 2010,\n  \"type\": \"FILM\",\n  \"category\": \"SCIENCE_FICTION\",\n  \"rating\": 8.8,\n  \"director\": \"Christopher Nolan\",\n  \"cast\": [\"Leonardo DiCaprio\", \"Marion Cotillard\", \"Tom Hardy\", \"Elliot Page\"]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/videos",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "videos"]
+						},
+						"description": "Crée une nouvelle vidéo"
+					}
+				},
+				{
+					"name": "Update Video",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Inception (Updated)\",\n  \"description\": \"Un voleur qui s'infiltre dans les rêves - Version Director's Cut\",\n  \"thumbnailUrl\": \"https://example.com/inception-thumb-hd.jpg\",\n  \"trailerUrl\": \"https://www.youtube.com/embed/YoHD9XEInc0\",\n  \"duration\": 152,\n  \"releaseYear\": 2010,\n  \"type\": \"FILM\",\n  \"category\": \"SCIENCE_FICTION\",\n  \"rating\": 9.0,\n  \"director\": \"Christopher Nolan\",\n  \"cast\": [\"Leonardo DiCaprio\", \"Marion Cotillard\", \"Tom Hardy\", \"Elliot Page\"]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/videos/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "videos", "1"]
+						},
+						"description": "Met à jour une vidéo existante"
+					}
+				},
+				{
+					"name": "Delete Video",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/videos/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "videos", "1"]
+						},
+						"description": "Supprime une vidéo par son ID"
+					}
+				},
+				{
+					"name": "Get Videos By Type",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/videos/type/FILM",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "videos", "type", "FILM"]
+						},
+						"description": "Filtre les vidéos par type (FILM ou SERIE)"
+					}
+				},
+				{
+					"name": "Get Videos By Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/videos/category/SCIENCE_FICTION",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "videos", "category", "SCIENCE_FICTION"]
+						},
+						"description": "Filtre les vidéos par catégorie"
+					}
+				},
+				{
+					"name": "Search Videos By Title",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/videos/search?title=inception",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "videos", "search"],
+							"query": [
+								{
+									"key": "title",
+									"value": "inception"
+								}
+							]
+						},
+						"description": "Recherche des vidéos par titre (insensible à la casse)"
+					}
+				}
+			],
+			"description": "Endpoints pour la gestion des vidéos"
+		},
+		{
+			"name": "User Service",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/users",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "users"]
+						},
+						"description": "Récupère la liste de tous les utilisateurs"
+					}
+				},
+				{
+					"name": "Get User By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/users/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "users", "1"]
+						},
+						"description": "Récupère un utilisateur par son ID"
+					}
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"johndoe\",\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/users",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "users"]
+						},
+						"description": "Crée un nouvel utilisateur"
+					}
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"johndoe_updated\",\n  \"email\": \"john.updated@example.com\",\n  \"password\": \"newpassword123\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/users/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "users", "1"]
+						},
+						"description": "Met à jour un utilisateur existant"
+					}
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/users/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "users", "1"]
+						},
+						"description": "Supprime un utilisateur"
+					}
+				},
+				{
+					"name": "Get User Statistics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/users/1/statistics",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "users", "1", "statistics"]
+						},
+						"description": "Récupère les statistiques de visionnage d'un utilisateur"
+					}
+				}
+			],
+			"description": "Endpoints pour la gestion des utilisateurs"
+		},
+		{
+			"name": "Watchlist",
+			"item": [
+				{
+					"name": "Get User Watchlist",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/users/1/watchlist",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "users", "1", "watchlist"]
+						},
+						"description": "Récupère la watchlist d'un utilisateur"
+					}
+				},
+				{
+					"name": "Add Video To Watchlist",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"videoId\": 1\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/users/1/watchlist",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "users", "1", "watchlist"]
+						},
+						"description": "Ajoute une vidéo à la watchlist d'un utilisateur"
+					}
+				},
+				{
+					"name": "Remove Video From Watchlist",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/users/1/watchlist/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "users", "1", "watchlist", "1"]
+						},
+						"description": "Retire une vidéo de la watchlist"
+					}
+				}
+			],
+			"description": "Endpoints pour la gestion de la watchlist"
+		},
+		{
+			"name": "Watch History",
+			"item": [
+				{
+					"name": "Get User Watch History",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/users/1/watch-history?limit=10",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "users", "1", "watch-history"],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Récupère l'historique de visionnage d'un utilisateur (limité à X résultats)"
+					}
+				},
+				{
+					"name": "Log Watch History",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"videoId\": 1,\n  \"progressTime\": 3600,\n  \"completed\": true\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/users/1/watch-history",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "users", "1", "watch-history"]
+						},
+						"description": "Enregistre un visionnage dans l'historique"
+					}
+				},
+				{
+					"name": "Log Partial Watch",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"videoId\": 1,\n  \"progressTime\": 1800,\n  \"completed\": false\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/users/1/watch-history",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "users", "1", "watch-history"]
+						},
+						"description": "Enregistre un visionnage partiel"
+					}
+				}
+			],
+			"description": "Endpoints pour la gestion de l'historique de visionnage"
+		},
+		{
+			"name": "Discovery Service",
+			"item": [
+				{
+					"name": "Eureka Dashboard",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8761",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8761"
+						},
+						"description": "Dashboard Eureka pour voir tous les services enregistrés"
+					}
+				}
+			],
+			"description": "Service de découverte Eureka"
+		}
+	],
+	"variable": [
+		{
+			"key": "gateway_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "eureka_url",
+			"value": "http://localhost:8761",
+			"type": "string"
+		}
+	]
+}
+
