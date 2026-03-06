@@ -1,0 +1,94 @@
+@startuml StreamCore Entity Class Diagram
+
+' Styling
+skinparam classAttributeIconSize 0
+skinparam class {
+    BackgroundColor<<Entity>> LightBlue
+}
+
+' Video Service Package
+package "video-service" {
+
+    ' Video Entity
+    class Video <<Entity>> {
+        - id: Long
+        - title: String
+        - description: String
+        - thumbnailUrl: String
+        - trailerUrl: String
+        - duration: Integer
+        - releaseYear: Integer
+        - type: VideoType
+        - category: Category
+        - rating: Double
+        - director: String
+        - cast: List<String>
+    }
+
+    enum VideoType {
+        FILM
+        SERIE
+    }
+
+    enum Category {
+        ACTION
+        COMEDIE
+        DRAME
+        SCIENCE_FICTION
+        THRILLER
+        HORREUR
+    }
+
+    ' Relationships
+    Video "1" -- "1" VideoType
+    Video "1" -- "1" Category
+}
+
+' User Service Package
+package "user-service" {
+
+    ' User Entity
+    class User <<Entity>> {
+        - id: Long
+        - username: String
+        - email: String
+        - password: String
+    }
+
+    ' Watchlist Entity
+    class Watchlist <<Entity>> {
+        - id: Long
+        - userId: Long
+        - videoId: Long
+        - addedAt: Instant
+    }
+
+    ' WatchHistory Entity
+    class WatchHistory <<Entity>> {
+        - id: Long
+        - userId: Long
+        - videoId: Long
+        - watchedAt: Instant
+        - progressTime: Integer
+        - completed: Boolean
+    }
+
+    ' Relationships
+    User "1" -- "0..*" Watchlist : has
+    User "1" -- "0..*" WatchHistory : has
+}
+
+' Cross-service relationships
+Watchlist "0..*" --> "1" Video : references
+WatchHistory "0..*" --> "1" Video : references
+
+note bottom of User
+  PostgreSQL database: user_db
+end note
+
+note bottom of Video
+  PostgreSQL database: video_db
+end note
+
+@enduml
+
